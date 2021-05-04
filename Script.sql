@@ -45,7 +45,7 @@ group by freelancer.service_ID
 order by count(*) DESC;
 
 -- Query 5: Checking which account manager handles most clients
-select count(client.name) as 'Number of clients', client.account_manager_ID, SUBSTRING_INDEX(`user`.email, '@', 1) as 'Account manager'
+select count(client.name) as 'Number of clients', client.account_manager_ID, CONCAT(`user`.first_name, ' ', `user`.last_name) as 'Account manager'
 from client 
 left join `user` 
 on client.account_manager_ID  = `user`.ID 
@@ -72,5 +72,16 @@ on client_invoice.client_ID = client.ID
 group by client_ID
 order by sum(amount) DESC
 limit 10;
+
+-- Query 8: Type of users
+
+select count(`user`.ID) as 'Total_number', `user`.user_type_ID, user_type.value
+from `user`
+left join user_type 
+on `user`.user_type_ID = user_type.ID 
+group by `user`.user_type_ID
+;
+
+
 
 
